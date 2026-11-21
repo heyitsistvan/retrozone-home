@@ -4,6 +4,7 @@ version = "0.2.0"
 edition = "2021"
 description = "Lets a player's other devices play the games on this computer, through RetroZone"
 repository = "https://github.com/heyitsistvan/retrozone-home"
+license = "MIT"
 publish = false
 
 [lib]

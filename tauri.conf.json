@@ -27,13 +27,26 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["nsis"],
+    "targets": [
+      "nsis"
+    ],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
       "icons/128x128@2x.png",
       "icons/icon.png",
       "icons/icon.ico"
-    ]
+    ],
+    "publisher": "RetroZone",
+    "homepage": "https://github.com/heyitsistvan/retrozone-home",
+    "copyright": "Copyright (c) 2026 heyitsistvan. MIT License.",
+    "category": "Game",
+    "shortDescription": "Play the games on this computer from your other devices, through RetroZone",
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser",
+        "installerIcon": "icons/icon.ico"
+      }
+    }
   }
 }

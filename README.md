@@ -12,6 +12,12 @@ it does not have, RetroZone introduces the two, and they connect directly (WebRT
 goes from your computer to that device, and nowhere else. No game passes through RetroZone, and
 the device keeps no copy.
 
+## Getting it
+
+**[Download the installer for Windows](https://github.com/heyitsistvan/retrozone-home/releases/latest/download/RetroZone-Home-Setup.exe)**
+(Windows 10 and 11), or pick a version on the [releases page](https://github.com/heyitsistvan/retrozone-home/releases).
+It is not signed yet, so Windows may stop it the first time: *More info*, then *Run anyway*.
+
 ## Using it
 
 Open it, and:
@@ -103,10 +109,14 @@ For trying it out:
 - `retrozone-home debug-index <folder> <extensions> <out>` writes every SHA-1 a folder's files are
   known by.
 
+## License
+
+MIT - see [LICENSE](LICENSE). The Fraunces font in `ui/fonts` is under the SIL Open Font License.
+
 ## Not done yet
 
 A relay (TURN) for networks that will not let two devices connect directly; a signed installer;
-updates.
+updates from inside the app.
 
 Known: with the window hidden in the tray, a program that closes another by sending its "main
 window" WM_CLOSE (as .NET's `CloseMainWindow()` does) hits the single-instance plugin's helper
