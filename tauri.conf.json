@@ -1,6 +1,6 @@
 {
   "productName": "RetroZone Home",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "identifier": "app.retrozone.home",
   "build": {
     "frontendDist": "ui"
@@ -18,7 +18,8 @@
         "center": true,
         "visible": false,
         "theme": "Dark",
-        "backgroundColor": "#181512"
+        "backgroundColor": "#181512",
+        "create": false
       }
     ],
     "security": {

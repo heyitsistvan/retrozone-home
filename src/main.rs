@@ -6,6 +6,10 @@
 //! folder, opening the browser and starting with the computer are done here, not by the page.
 //!
 //! `--hidden` starts it in the tray without the window: how it starts with the computer.
+//!
+//! In the tray there is no window at all - closing it closes it for real, and its browser engine
+//! (WebView2, a few processes and some 180 MB) goes with it - so what runs all the time is the
+//! engine alone. The window is made again when it is opened.
 
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
@@ -29,12 +33,27 @@ struct App {
     engine: Arc<Engine>,
 }
 
+/// Opens the window, making it first if it is not there: it is not, while the program is in the tray
 fn show(app: &AppHandle) {
     if let Some(window) = app.get_webview_window("main") {
         let _ = window.unminimize();
         let _ = window.show();
         let _ = window.set_focus();
+        return;
     }
+
+    // Made away from the window's own thread: on Windows, making one from inside an event handler there deadlocks
+    let app = app.clone();
+    tauri::async_runtime::spawn(async move {
+        let Some(config) = app.config().app.windows.first().cloned() else { return };
+        match tauri::WebviewWindowBuilder::from_config(&app, &config).and_then(|builder| builder.build()) {
+            Ok(window) => {
+                let _ = window.show();
+                let _ = window.set_focus();
+            }
+            Err(error) => log::error!("the window could not be made: {error}"),
+        }
+    });
 }
 
 /// Opens a page in the player's browser. `RETROZONE_HOME_NO_BROWSER` only notes it, for trying
@@ -154,11 +173,11 @@ async fn open_site(handle: AppHandle, app: tauri::State<'_, App>) -> Result<(), 
     Ok(())
 }
 
-/// Hides the window; the program goes on in the tray. Asked for once the player has read that it does
+/// Closes the window; the program goes on in the tray. Asked for once the player has read that it does
 #[tauri::command]
 async fn hide(window: tauri::WebviewWindow, app: tauri::State<'_, App>) -> Result<(), String> {
     app.engine.set_told_tray();
-    let _ = window.hide();
+    let _ = window.destroy();
     Ok(())
 }
 
@@ -297,14 +316,18 @@ fn main() {
         // Closing the window leaves the program running in the tray. The first time, the page says so first
         .on_window_event(|window, event| {
             if let WindowEvent::CloseRequested { api, .. } = event {
-                api.prevent_close();
-                if window.app_handle().state::<App>().engine.told_tray() {
-                    let _ = window.hide();
-                } else {
+                if !window.app_handle().state::<App>().engine.told_tray() {
+                    api.prevent_close();
                     let _ = window.emit("close-requested", ());
                 }
             }
         })
-        .run(tauri::generate_context!())
-        .expect("RetroZone Home could not start");
+        .build(tauri::generate_context!())
+        .expect("RetroZone Home could not start")
+        // The last window closing is not the program ending: it goes on in the tray until it is told to quit
+        .run(|_app, event| {
+            if let tauri::RunEvent::ExitRequested { code: None, api, .. } = event {
+                api.prevent_exit();
+            }
+        });
 }

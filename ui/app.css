@@ -94,11 +94,10 @@ input { font: inherit; }
 
 .status { display: flex; align-items: flex-start; gap: 14px; padding: 18px; border-radius: 10px; background: var(--surface); box-shadow: inset 0 0 0 1px #ffffff08; }
 .status__dot { position: relative; width: 12px; height: 12px; margin-top: 6px; border-radius: 50%; background: var(--muted); flex: none; }
-.status[data-tone=good] .status__dot { background: var(--good); }
-.status[data-tone=good] .status__dot::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 2px solid var(--good); opacity: 0; animation: ring 2.4s ease-out infinite; }
+/* A steady glow, not a pulse: an animation that never ends has the window drawn again and again for nothing */
+.status[data-tone=good] .status__dot { background: var(--good); box-shadow: 0 0 0 4px color-mix(in srgb, var(--good) 20%, transparent), 0 0 14px color-mix(in srgb, var(--good) 55%, transparent); }
 .status[data-tone=busy] .status__dot { background: var(--accent); }
 .status[data-tone=warn] .status__dot { background: var(--warn); }
-@keyframes ring { 0% { transform: scale(.6); opacity: .7; } 100% { transform: scale(1.5); opacity: 0; } }
 .status__main { flex: 1; min-width: 0; }
 .status h2 { margin: 0 0 4px; font-family: var(--display); font-size: 1.28rem; font-weight: 600; line-height: 1.25; }
 .status p { margin: 0; color: var(--muted); font-size: .88rem; }
