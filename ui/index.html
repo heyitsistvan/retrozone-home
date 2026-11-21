@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>RetroZone Home</title>
+	<link rel="stylesheet" href="app.css">
+</head>
+<body>
+	<svg class="sprite" aria-hidden="true">
+		<symbol id="pad" viewBox="0 0 32 32"><path fill="currentColor" d="M9 9h14a7 7 0 0 1 7 7v1a6 6 0 0 1-10.6 3.8L18.7 20h-5.4l-.7.8A6 6 0 0 1 2 17v-1a7 7 0 0 1 7-7Zm0 4v2H7v2h2v2h2v-2h2v-2h-2v-2H9Zm12.5 1.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Zm3-3a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/></symbol>
+		<symbol id="folder" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 7a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7Z"/></symbol>
+		<symbol id="plus" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 5v14M5 12h14"/></symbol>
+		<symbol id="x" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6 6 18"/></symbol>
+		<symbol id="device" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 3h10a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1ZM11 18h2"/></symbol>
+		<symbol id="out" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+	</svg>
+
+	<header class="top">
+		<svg class="top__logo"><use href="#pad"></use></svg>
+		<span class="top__name">RetroZone <em>Home</em></span>
+		<span class="top__account" id="account" hidden></span>
+	</header>
+
+	<main id="view"></main>
+	<footer class="foot" id="foot" hidden></footer>
+
+	<!-- Said once, the first time the window is closed -->
+	<div class="sheet" id="tray-note" hidden>
+		<div class="sheet__card" role="dialog" aria-labelledby="tray-note-title">
+			<h2 id="tray-note-title">RetroZone Home keeps running</h2>
+			<p>So your devices can go on playing, it stays in the tray by the clock after this window closes. Open it again from there, or quit it there when you want it to stop.</p>
+			<div class="sheet__actions">
+				<button type="button" class="btn btn--primary" data-act="hide">OK</button>
+				<button type="button" class="btn btn--quiet" data-act="quit">Quit instead</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- A question with a yes and a no. Not window.confirm: the dialog plugin makes that one asynchronous, and a promise is always "yes" -->
+	<div class="sheet" id="ask" hidden>
+		<div class="sheet__card" role="dialog" aria-labelledby="ask-title">
+			<h2 id="ask-title"></h2>
+			<p id="ask-text"></p>
+			<div class="sheet__actions">
+				<button type="button" class="btn btn--primary" data-ask="yes"></button>
+				<button type="button" class="btn btn--quiet" data-ask="no">Cancel</button>
+			</div>
+		</div>
+	</div>
+
+	<script src="app.js"></script>
+</body>
+</html>

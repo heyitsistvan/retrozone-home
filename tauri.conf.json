@@ -1,0 +1,39 @@
+{
+  "productName": "RetroZone Home",
+  "version": "0.2.0",
+  "identifier": "app.retrozone.home",
+  "build": {
+    "frontendDist": "ui"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "label": "main",
+        "title": "RetroZone Home",
+        "width": 460,
+        "height": 700,
+        "minWidth": 400,
+        "minHeight": 580,
+        "center": true,
+        "visible": false,
+        "theme": "Dark",
+        "backgroundColor": "#181512"
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.png",
+      "icons/icon.ico"
+    ]
+  }
+}

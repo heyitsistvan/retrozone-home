@@ -1,0 +1,45 @@
+[package]
+name = "retrozone-home"
+version = "0.2.0"
+edition = "2021"
+description = "Lets a player's other devices play the games on this computer, through RetroZone"
+repository = "https://github.com/heyitsistvan/retrozone-home"
+publish = false
+
+[lib]
+name = "retrozone_home"
+path = "src/lib.rs"
+
+[[bin]]
+name = "retrozone-home"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+anyhow = "1"
+async-trait = "0.1"
+bytes = "1"
+crc32fast = "1"
+env_logger = { version = "0.11", default-features = false, features = ["humantime"] }
+flate2 = "1"
+hex = "0.4"
+log = "0.4"
+reqwest = { version = "0.12", default-features = false, features = ["native-tls", "json", "cookies"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha1 = "0.10"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time", "sync", "fs", "io-util", "signal"] }
+walkdir = "2"
+webrtc = "0.21"
+# The window: Tauri 2 (stable), with its tray icon, and the plugins for the folder picker, opening
+# the browser, starting with the computer, and staying one copy
+tauri = { version = "2", features = ["tray-icon"] }
+tauri-plugin-autostart = "2"
+tauri-plugin-dialog = "2"
+tauri-plugin-opener = "2"
+tauri-plugin-single-instance = "2"
+
+[profile.release]
+strip = true

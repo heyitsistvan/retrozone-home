@@ -1,0 +1,3 @@
+# Build output, and what Tauri generates while building
+/target/
+/gen/
